@@ -1,0 +1,47 @@
+class Pilha:
+    def __init__(self):
+        self.itens = []
+
+    def push(self, item):
+        self.itens.append(item)
+
+    def pop(self):
+        if not self.is_empty():
+            return self.itens.pop()
+        return None
+
+    def peek(self):
+        if not self.is_empty():
+            return self.itens[-1]
+        return None
+
+    def is_empty(self):
+        return len(self.itens) == 0
+
+
+def reverter_string(string):
+    pilha = Pilha()
+    for char in string:
+        if char != " ":
+            pilha.push(char)
+
+    reversed_string = ""
+    while not pilha.is_empty():
+        reversed_string += pilha.pop()
+
+    return reversed_string
+
+
+def main():
+    string = input("Digite uma string: ")
+    print("String original:", string)
+    print("String invertida:", reverter_string(string))
+
+if __name__ == "__main__":
+    main()
+
+
+
+
+
+#feito por Rick jose
