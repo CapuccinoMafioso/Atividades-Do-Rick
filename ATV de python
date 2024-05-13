@@ -1,0 +1,73 @@
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+class OrdenedList:
+    def __init__(self):
+        self.head = None
+
+    def insert(self, new_node):
+        """
+        Insere um novo nó na lista mantendo a ordem alfabética pela descrição do produto.
+        """
+        if self.head is None:
+            self.head = new_node
+        elif self.head.data['descricao'] > new_node.data['descricao']:
+            new_node.next = self.head
+            self.head = new_node
+        else:
+            current = self.head
+            while current.next is not None and current.next.data['descricao'] < new_node.data['descricao']:
+                current = current.next
+            new_node.next = current.next
+            current.next = new_node
+
+    def search(self, description):
+        """
+        Busca um produto na lista pelo nome.
+        Retorna True se o produto está na lista, False caso contrário.
+        """
+        current = self.head
+        while current is not None:
+            if current.data['descricao'] == description:
+                return True
+            current = current.next
+        return False
+
+    def remove(self, description):
+        """
+        Remove um produto da lista pelo nome.
+        Retorna True se o produto foi removido com sucesso, False caso contrário.
+        """
+        if self.head is None:
+            return False
+        elif self.head.data['descricao'] == description:
+            self.head = self.head.next
+            return True
+        else:
+            current = self.head
+            while current.next is not None and current.next.data['descricao'] != description:
+                current = current.next
+            if current.next is not None:
+                current.next = current.next.next
+                return True
+        return False
+    
+
+
+    # Exemplo de uso
+lista = OrdenedList()
+produto1 = {'descricao': 'Mouse Gamer rgb', 'preco': 152}
+produto2 = {'descricao': 'Teclado RGB', 'preco': 178}
+produto3 = {'descricao': 'Mesa gamer', 'preco': 400}
+
+lista.insert(Node(produto1))
+lista.insert(Node(produto2))
+lista.insert(Node(produto3))
+
+print("Lista de produtos:")
+current = lista.head
+while current is not None:
+    print(current.data)
+    current = current.next
